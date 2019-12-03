@@ -21,6 +21,25 @@ class GranuleCell(NeuronModel):
 
     morphologies = [builder]
 
+    synapse_types = {
+        "AMPA": {
+            "point_process": ('AMPA', 'granule_cell_deterministic'),
+            "attributes": {
+                "tau_facil": 5, "tau_rec": 8, "tau_1": 1, "gmax": 1200, "U": 0.43
+            }
+        },
+        "NMDA": {
+            "point_process": ('NMDA', 'granule_cell_deterministic'),
+            "attributes": {
+                "tau_facil": 5, "tau_rec": 8, "tau_1": 1, "gmax": 18800, "U": 0.43
+            }
+        },
+        "GABA": {
+            "point_process": 'GABA',
+            "attributes": {"U": 0.35}
+        }
+    }
+
     section_types = {
         "soma": {
             "mechanisms": ['Leak', 'Kv3_4', 'Kv4_3', 'Kir2_3', 'Ca', 'Kv1_1', 'Kv1_5', 'Kv2_2', ('cdp5', 'CR')],
@@ -38,6 +57,7 @@ class GranuleCell(NeuronModel):
             }
         },
         "dendrites": {
+            "synapses": ['NMDA', 'AMPA', 'GABA'],
             "mechanisms": ['Leak', 'Ca', 'Kca1_1', 'Kv1_1', ('cdp5', 'CR')],
             "attributes": {
                 "Ra": 100, "cm": 2.5,
