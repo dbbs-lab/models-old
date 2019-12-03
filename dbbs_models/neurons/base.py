@@ -135,19 +135,49 @@ class NeuronModel:
                         target.label = label
 
     def _init_section(self, section):
+        # Set the amount of sections to some standard odd amount
         section.nseg = 1 + (2 * int(section.L / 40))
         definition = self.__class__.section_types[section.label]
+        self._resolved_mechanisms = {}
+        # Insert the mechanisms
         for mechanism in definition["mechanisms"]:
+            # Use Glia to resolve the mechanism selection.
             if isinstance(mechanism, tuple):
-                mechanism_name = mechanism[0]
+                # Mechanism defined as: `(mech_name, mech_variant)`
                 mechanism_variant = mechanism[1]
-                g.insert(section, mechanism_name, pkg="dbbs_mod_collection", variant=mechanism_variant)
+                mechanism = mechanism[0]
+                mod_name = g.resolve(mechanism, pkg="dbbs_mod_collection", variant=mechanism_variant)
             else:
-                g.insert(section, mechanism, pkg="dbbs_mod_collection")
+                # Mechanism defined as string
+                mod_name = g.resolve(mechanism, pkg="dbbs_mod_collection")
+            # Store a map of mechanisms to full mod_names for the attribute setter
+            self._resolved_mechanisms[mechanism] = mod_name
+            # Use Glia to insert the resolved mod.
+            g.insert(section, mod_name)
+
+        # Set the attributes on this section and its mechanisms
         for attribute, value in definition["attributes"].items():
-            section.neuron_section.__dict__[attribute] = value
+            if isinstance(attribute, tuple):
+                # `attribute` is an attribute of a specific mechanism and defined
+                # as `(attribute, mechanism)`. This makes use of the fact that
+                # NEURON provides shorthands to a mechanism's attribute as
+                # `attribute_mechanism` instead of having to iterate over all
+                # the segments and setting `mechanism.attribute` for each
+                mechanism = attribute[1]
+                if not mechanism in self._resolved_mechanisms:
+                    raise MechanismAttributeError("The attribute " + repr(attribute) + " specifies a mechanism '{}' that was not inserted in this section.".format(mechanism))
+                mechanism_mod = self._resolved_mechanisms[mechanism]
+                attribute_name = attribute[0] + "_" + mechanism_mod
+            else:
+                # `attribute` is an attribute of the section and is defined as string
+                attribute_name = attribute
+            # Use setattr to set the obtained attribute information. __dict__
+            # does not work as NEURON's Python interface is incomplete.
+            setattr(section.neuron_section, attribute_name, value)
+
+        # Copy the synapse definitions to this section
         if "synapses" in definition:
-            section.synapses = definition["synapses"]
+            section.synapses = definition["synapses"].copy()
 
     def boot(self):
         pass

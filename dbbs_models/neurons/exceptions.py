@@ -15,3 +15,6 @@ class SynapseNotPresentError(ConnectionError):
 
 class SynapseNotDefinedError(ConnectionError):
     pass
+
+class MechanismAttributeError(ModelClassError):
+    pass
