@@ -14,8 +14,16 @@ def is_sequence(obj):
 
 class Section:
 
-    def __init__(self, section):
-        self.__dict__["neuron_section"] = section
+    def __init__(self, section=None, *args, **kwargs):
+        if section is None:
+            self.__dict__["neuron_section"] = h.Section(*args, **kwargs)
+        else:
+            self.__dict__["neuron_section"] = section
+        self.point_processes = []
+        self.synapses = []
+
+    ## Wrapper functions to make our Section behave as much as a nrn.Section as
+    ## possible.
 
     def __getattr__(self, attr):
         return getattr(self.neuron_section, attr)
@@ -26,8 +34,19 @@ class Section:
         except AttributeError as _:
             self.__dict__[attr] = value
 
-    def __call__(self):
+    def __call__(self, *args, **kwargs):
+        return self.__neuron__()(*args, **kwargs)
+
+    ## EOF Wrappers
+
+    ## Neuron magic functions to make NEURON play nice instead of a gaping
+    ## festering wound of C vulnerabilities and segmentation faults.
+
+    def __neuron__(self):
         return self.neuron_section
+
+    def __add_point_process__(self, ptr):
+        self.point_processes.append(ptr)
 
     @classmethod
     def create(cls, *args, **kwargs):
@@ -54,8 +73,8 @@ class Section:
 
     def connect(self, target, *args, **kwargs):
         if isinstance(target, Section):
-            target = target()
-        self().connect(target, *args, **kwargs)
+            target = target.__neuron__()
+        self.__neuron__().connect(target, *args, **kwargs)
 
 class Builder:
     def __init__(self, builder):
@@ -135,6 +154,7 @@ class NeuronModel:
                         target.label = label
 
     def _init_section(self, section):
+        section.cell = self
         # Set the amount of sections to some standard odd amount
         section.nseg = 1 + (2 * int(section.L / 40))
         definition = self.__class__.section_types[section.label]
@@ -177,7 +197,7 @@ class NeuronModel:
 
         # Copy the synapse definitions to this section
         if "synapses" in definition:
-            section.synapses = definition["synapses"].copy()
+            section.available_synapse_types = definition["synapses"].copy()
 
     def boot(self):
         pass
@@ -208,9 +228,9 @@ class NeuronModel:
         if not hasattr(self.__class__, "synapse_types"):
             raise ModelClassError("Can't connect to a NeuronModel that does not specify any `synapse_types` on its class.")
         synapse_types = self.__class__.synapse_types
-        if not hasattr(to_section, "synapses") or not to_section.synapses:
-            raise ConnectionError("Can't connect to '{}' section without synapses.".format(to_section.label))
-        section_synapses = to_section.synapses
+        if not hasattr(to_section, "available_synapse_types") or not to_section.available_synapse_types:
+            raise ConnectionError("Can't connect to '{}' section without available synapse types.".format(to_section.label))
+        section_synapses = to_section.available_synapse_types
 
         if synapse_type is None:
             if len(section_synapses) != 1:
@@ -227,7 +247,13 @@ class NeuronModel:
 
         synapse_attributes = synapse_definition["attributes"] if "attributes" in synapse_definition else {}
         synapse_point_process = synapse_definition["point_process"]
-        synapse = Synapse(self, to_section, synapse_point_process, synapse_attributes)
+        synapse_variant = None
+        if isinstance(synapse_point_process, tuple):
+            synapse_variant = synapse_point_process[1]
+            synapse_point_process = synapse_point_process[0]
+        synapse = Synapse(self, to_section, synapse_point_process, synapse_attributes, variant=synapse_variant)
+        to_section.synapses.append(synapse)
+        # # TODO: THE FROM CELL'S OUTPUT CONNECTED TO THIS
         return synapse
 
 
