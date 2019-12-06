@@ -147,12 +147,15 @@ class GranuleCell(NeuronModel):
         ais.connect(hillock, 1)
 
         self.axon = [hillock, ais]
+        self.axon_hillick = hillock
+        self.axon_initial_segment = ais
 
     def build_ascending_axon(self):
         section_length = self.fiber_section_length
         n = int(self.ascending_axon_length / section_length)
         self.ascending_axon = [Section.create(name='ascending_axon_'+str(x)) for x in range(n)]
         y = 16.62232
+        previous_section = self.axon_initial_segment
         for section in self.ascending_axon:
             section.label = "ascending_axon"
             section.set_dimensions(length=self.fiber_section_length, diameter=0.3)
@@ -161,6 +164,8 @@ class GranuleCell(NeuronModel):
                 self.position + [0., y + section_length, 0.]
             ])
             y += section_length
+            section.connect(previous_section, 1)
+            previous_section = section
         # Store the last used y position as the start for the parallel fiber
         self.y_pf = y
         # Append ascending axon to axon
