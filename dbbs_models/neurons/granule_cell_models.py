@@ -1,6 +1,3 @@
-#Made by Stefano "Bremen" Masoli
-# Modified & updated by Elisa Marenzi
-
 import numpy as np
 from neuron import h
 from ..synapses import Synapse
