@@ -9,10 +9,6 @@ import glia as g
 p.load_file('stdlib.hoc')
 p.load_file('import3d.hoc')
 
-def is_sequence(obj):
-    t = type(obj)
-    return hasattr(t, '__len__') and hasattr(t, '__getitem__')
-
 class Builder:
     def __init__(self, builder):
         self.builder = builder
