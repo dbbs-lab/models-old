@@ -1,7 +1,7 @@
 import numpy as np
-from neuron import h
+from patch import p
 from ..synapses import Synapse
-from .base import NeuronModel, Section
+from .base import NeuronModel
 from math import floor
 
 class GranuleCell(NeuronModel):
@@ -116,27 +116,27 @@ class GranuleCell(NeuronModel):
     }
 
     def build_soma(self):
-        self.soma = [Section.create(name="soma")]
+        self.soma = [p.Section(name="soma")]
         self.soma[0].set_dimensions(length=5.62232, diameter=5.8)
         self.soma[0].set_segments(1)
         self.soma[0].add_3d([self.position, self.position + [0., 5.62232, 0.]])
 
     def build_dendrites(self):
-        self.dend = [Section.create(name='dend_'+str(x)) for x in range(4)]
+        self.dend = [p.Section(name='dend_'+str(x)) for x in range(4)]
         for dendrite in self.dend:
             dendrite.set_dimensions(length=15, diameter=0.75)
             dendrite.add_3d([self.position, self.position - [0., dendrite.L, 0.]])
             dendrite.connect(self.soma[0],0)
 
     def build_hillock(self):
-        hillock = Section.create(name="axon_hillock")
+        hillock = p.Section(name="axon_hillock")
         hillock.set_dimensions(length=1,diameter=1.5)
         hillock.set_segments(1)
         hillock.add_3d([self.position + [ 0., 5.62232, 0.], self.position + [0., 6.62232, 0.]])
         hillock.label = "axon_hillock"
         hillock.connect(self.soma[0], 0)
 
-        ais = Section.create(name="axon_initial_segment")
+        ais = p.Section(name="axon_initial_segment")
         ais.label = "axon_initial_segment"
         ais.set_dimensions(length=10,diameter=0.7)
         ais.set_segments(1)
@@ -150,7 +150,7 @@ class GranuleCell(NeuronModel):
     def build_ascending_axon(self):
         section_length = self.fiber_section_length
         n = int(self.ascending_axon_length / section_length)
-        self.ascending_axon = [Section.create(name='ascending_axon_'+str(x)) for x in range(n)]
+        self.ascending_axon = [p.Section(name='ascending_axon_'+str(x)) for x in range(n)]
         y = 16.62232
         previous_section = self.axon_initial_segment
         for section in self.ascending_axon:
@@ -171,7 +171,7 @@ class GranuleCell(NeuronModel):
     def build_parallel_fiber(self):
         section_length = self.fiber_section_length
         n = int(self.parallel_fiber_length / section_length)
-        self.parallel_fiber = [Section.create(name='parellel_fiber_'+str(x)) for x in range(n)]
+        self.parallel_fiber = [p.Section(name='parellel_fiber_'+str(x)) for x in range(n)]
         # Use the last AA y as Y for the PF
         y = self.y_pf
         center = self.position[2]

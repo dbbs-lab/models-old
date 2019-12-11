@@ -1,80 +1,17 @@
 import os, sys
 from contextlib import contextmanager
-from neuron import h
+from patch import p
+from patch.objects import Section
 from .exceptions import *
 from ..synapses import Synapse
 import numpy as np
 import glia as g
-h.load_file('stdlib.hoc')
-h.load_file('import3d.hoc')
+p.load_file('stdlib.hoc')
+p.load_file('import3d.hoc')
 
 def is_sequence(obj):
     t = type(obj)
     return hasattr(t, '__len__') and hasattr(t, '__getitem__')
-
-class Section:
-
-    def __init__(self, section=None, *args, **kwargs):
-        if section is None:
-            self.__dict__["neuron_section"] = h.Section(*args, **kwargs)
-        else:
-            self.__dict__["neuron_section"] = section
-        self.point_processes = []
-        self.synapses = []
-
-    ## Wrapper functions to make our Section behave as much as a nrn.Section as
-    ## possible.
-
-    def __getattr__(self, attr):
-        return getattr(self.neuron_section, attr)
-
-    def __setattr__(self, attr, value):
-        try:
-            setattr(self.neuron_section, attr, value)
-        except AttributeError as _:
-            self.__dict__[attr] = value
-
-    def __call__(self, *args, **kwargs):
-        return self.__neuron__()(*args, **kwargs)
-
-    ## EOF Wrappers
-
-    ## Neuron magic functions to make NEURON play nice instead of a gaping
-    ## festering wound of C vulnerabilities and segmentation faults.
-
-    def __neuron__(self):
-        return self.neuron_section
-
-    def __add_point_process__(self, ptr):
-        self.point_processes.append(ptr)
-
-    @classmethod
-    def create(cls, *args, **kwargs):
-        s = h.Section(*args, **kwargs)
-        return cls(s)
-
-    def set_dimensions(self, length, diameter):
-        self.L = length
-        self.diam = diameter
-
-    def set_segments(self, segments):
-        self.nseg = segments
-
-    def add_3d(self, points, diameters=None):
-        points = np.array(points)
-        if diameters is None:
-            diameters = [self.diam for _ in range(points.shape[0])]
-        if not is_sequence(diameters):
-            diameters = [diameter for _ in range(points.shape[0])]
-        self.neuron_section.push()
-        for point, diameter in zip(points, diameters):
-            h.pt3dadd(*point, diameter)
-        h.pop_section()
-
-    def connect(self, target, *args, **kwargs):
-        if isinstance(target, Section):
-            target = target.__neuron__()
-        self.__neuron__().connect(target, *args, **kwargs)
 
 class Builder:
     def __init__(self, builder):
@@ -102,9 +39,9 @@ class NeuronModel:
         morphology_loader.instantiate(self)
 
         # Wrap the neuron sections in our own Section, if not done by the Builder
-        self.soma = list(map(lambda s: s if isinstance(s, Section) else Section(s), self.soma))
-        self.dend = list(map(lambda s: s if isinstance(s, Section) else Section(s), self.dend))
-        self.axon = list(map(lambda s: s if isinstance(s, Section) else Section(s), self.axon))
+        self.soma = list(map(lambda s: s if isinstance(s, Section) else Section(p, s), self.soma))
+        self.dend = list(map(lambda s: s if isinstance(s, Section) else Section(p, s), self.dend))
+        self.axon = list(map(lambda s: s if isinstance(s, Section) else Section(p, s), self.axon))
         self.sections = self.soma + self.dend + self.axon
         self.dendrites = self.dend
 
@@ -131,10 +68,10 @@ class NeuronModel:
             else:
                 # If a string is given, treat it as a path for Import3d
                 file = os.path.join(os.path.dirname(__file__), "../morphologies", morphology)
-                loader = h.Import3d_Neurolucida3()
+                loader = p.Import3d_Neurolucida3()
                 with suppress_stdout():
                     loader.input(file)
-                imported_morphology = h.Import3d_GUI(loader, 0)
+                imported_morphology = p.Import3d_GUI(loader, 0)
                 cls.imported_morphologies.append(imported_morphology)
 
     def _apply_labels(self):
@@ -193,7 +130,7 @@ class NeuronModel:
                 attribute_name = attribute
             # Use setattr to set the obtained attribute information. __dict__
             # does not work as NEURON's Python interface is incomplete.
-            setattr(section.neuron_section, attribute_name, value)
+            setattr(section.__neuron__(), attribute_name, value)
 
         # Copy the synapse definitions to this section
         if "synapses" in definition:
