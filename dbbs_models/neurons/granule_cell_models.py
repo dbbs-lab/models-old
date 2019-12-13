@@ -116,20 +116,30 @@ class GranuleCell(NeuronModel):
     }
 
     def build_soma(self):
-        self.soma = [p.Section(name="soma")]
+        self.soma = [p.Section()]
         self.soma[0].set_dimensions(length=5.62232, diameter=5.8)
         self.soma[0].set_segments(1)
         self.soma[0].add_3d([self.position, self.position + [0., 5.62232, 0.]])
 
     def build_dendrites(self):
-        self.dend = [p.Section(name='dend_'+str(x)) for x in range(4)]
-        for dendrite in self.dend:
+        self.dend = []
+        for i in range(4):
+            dendrite = p.Section()
+            self.dend.append(dendrite)
+            dendrite_position = self.position.copy()
+            # Shift the dendrites a little bit for voxelization
+            dendrite_position[0] += i
             dendrite.set_dimensions(length=15, diameter=0.75)
-            dendrite.add_3d([self.position, self.position - [0., dendrite.L, 0.]])
+            points = []
+            for j in range(10):
+                pt = dendrite_position.copy()
+                pt[1] += dendrite.L * j / 10
+                points.append(pt)
+            dendrite.add_3d(points)
             dendrite.connect(self.soma[0],0)
 
     def build_hillock(self):
-        hillock = p.Section(name="axon_hillock")
+        hillock = p.Section()
         hillock.set_dimensions(length=1,diameter=1.5)
         hillock.set_segments(1)
         hillock.add_3d([self.position + [ 0., 5.62232, 0.], self.position + [0., 6.62232, 0.]])
@@ -150,7 +160,7 @@ class GranuleCell(NeuronModel):
     def build_ascending_axon(self):
         section_length = self.fiber_section_length
         n = int(self.ascending_axon_length / section_length)
-        self.ascending_axon = [p.Section(name='ascending_axon_'+str(x)) for x in range(n)]
+        self.ascending_axon = [p.Section() for x in range(n)]
         y = 16.62232
         previous_section = self.axon_initial_segment
         for section in self.ascending_axon:
