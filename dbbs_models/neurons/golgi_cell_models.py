@@ -1,4 +1,3 @@
-from neuron import h
 from .base import NeuronModel
 
 class GolgiCell(NeuronModel):
@@ -8,7 +7,8 @@ class GolgiCell(NeuronModel):
         "soma": {
             "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Kv4_3', 'Kca1_1', 'Kca2_2', 'Cav2_2', 'Cav3_1', 'cdp5'],
             "attributes": {
-                "Ra": 122, "cm": 1, ("e", "Leak"): -59, "ena": 60, "ek": -80, "eca": 137,
+                "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
+                ("e", "Leak"): -59,
                 ("gmax", "Leak"): 0.0001,
                 ("gbar", "Nav1_6"): 0.21484733189661,
                 ("gbar", "Kv1_1"): 0.0077852492295,
@@ -27,7 +27,8 @@ class GolgiCell(NeuronModel):
         "basal_dendrites": {
             "mechanisms": ['Leak','Nav1_6','Kv1_1','Kca1_1','Kca2_2','Cav2_2','cdp5'],
             "attributes": {
-                "Ra": 122, "cm": 3, ("e", "Leak"): -59, "ena": 60, "ek": -80, "eca": 137,
+                "Ra": 122, "cm": 3, "ena": 60, "ek": -80, "eca": 137,
+                ("e", "Leak"): -59,
                 ("gmax", "Leak"): 0.00003,
                 ("gbar", "Nav1_6"): 0.00596389701963,
                 ("gbar", "Kv1_1"): 0.00300075070483,
@@ -40,7 +41,8 @@ class GolgiCell(NeuronModel):
         "apical_dendrites": {
             "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kca1_1', 'Kca2_2', 'Cav2_3', 'Cav3_1', 'cdp5'],
             "attributes":  {
-                "Ra": 122, "cm": 3, ("e", "Leak"): -59, "ena": 60, "ek": -80, "eca": 137,
+                "Ra": 122, "cm": 3, "ena": 60, "ek": -80, "eca": 137,
+                ("e", "Leak"): -59,
                 ("gmax", "Leak"): 0.00003,
                 ("gbar", "Nav1_6"): 0.0032004946448,
                 ("gbar", "Kv1_1"): 0.00366791747215,
@@ -54,7 +56,8 @@ class GolgiCell(NeuronModel):
         "axon": {
             "mechanisms": ['Leak', 'Kv1_1', 'Nav1_6', 'Kv3_4', 'cdp5'],
             "attributes": {
-                "Ra": 122, "cm": 1, ("e", "Leak"): -59, "ena": 60, "ek": -80, "eca": 137,
+                "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
+                ("e", "Leak"): -59,
                 ("gmax", "Leak"): 0.00001,
                 ("gbar", "Kv1_1"): 0.004,
                 ("gbar", "Nav1_6"): 9.670147548E-05,
@@ -65,7 +68,8 @@ class GolgiCell(NeuronModel):
         "axon_initial_segment": {
             "mechanisms": ['Leak', 'HCN1', 'HCN2', 'Nav1_6', 'Kv3_4', 'Km', 'cdp5'],
             "attributes": {
-                "Ra": 122, "cm": 1, ("e", "Leak"): -59, "ena": 60, "eca": 137,
+                "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
+                ("e", "Leak"): -59,
                 ("gmax", "Leak"): 0.00003,
                 ("gbar", "HCN1"): 0.00020635332351,
                 ("gbar", "HCN2"): 0.0002816526031,
