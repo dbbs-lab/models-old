@@ -31,6 +31,7 @@ class GolgiCell(NeuronModel):
             "mechanisms": [], "attributes": {}
         },
         "basal_dendrites": {
+            "synapses": ['AMPA'],
             "mechanisms": ['Leak','Nav1_6','Kv1_1','Kca1_1','Kca2_2','Cav2_2','cdp5'],
             "attributes": {
                 "Ra": 122, "cm": 3, "ena": 60, "ek": -80, "eca": 137,
