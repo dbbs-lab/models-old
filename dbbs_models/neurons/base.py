@@ -188,7 +188,7 @@ class NeuronModel:
             synapse_point_process = synapse_point_process[0]
         synapse = Synapse(self, to_section, synapse_point_process, synapse_attributes, variant=synapse_variant)
         to_section.synapses.append(synapse)
-        # # TODO: THE FROM CELL'S OUTPUT CONNECTED TO THIS
+        from_section.connect_points(synapse._point_process)
         return synapse
 
 
