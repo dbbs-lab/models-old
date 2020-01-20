@@ -3,6 +3,12 @@ from .base import NeuronModel
 class GolgiCell(NeuronModel):
     morphologies = ['pair-140514-C2-1_split_1.asc']
 
+    synapse_types = {
+        "AMPA": {
+            "point_process": ('AMPA', 'golgi_cell_deterministic'),
+        }
+    }
+
     section_types = {
         "soma": {
             "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Kv4_3', 'Kca1_1', 'Kca2_2', 'Cav2_2', 'Cav3_1', 'cdp5'],
@@ -39,6 +45,7 @@ class GolgiCell(NeuronModel):
             }
         },
         "apical_dendrites": {
+            "synapses": ['AMPA'],
             "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kca1_1', 'Kca2_2', 'Cav2_3', 'Cav3_1', 'cdp5'],
             "attributes":  {
                 "Ra": 122, "cm": 3, "ena": 60, "ek": -80, "eca": 137,
