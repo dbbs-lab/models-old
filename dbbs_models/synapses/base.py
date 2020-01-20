@@ -12,4 +12,4 @@ class Synapse:
             setattr(self._point_process, key, value)
 
     def __neuron__(self):
-        return self._point_process
+        return self._point_process.__neuron__()
