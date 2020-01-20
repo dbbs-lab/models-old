@@ -35,11 +35,13 @@ class NeuronModel:
         morphology_loader.instantiate(self)
 
         # Wrap the neuron sections in our own Section, if not done by the Builder
-        self.soma = list(map(lambda s: s if isinstance(s, Section) else Section(p, s), self.soma))
-        self.dend = list(map(lambda s: s if isinstance(s, Section) else Section(p, s), self.dend))
-        self.axon = list(map(lambda s: s if isinstance(s, Section) else Section(p, s), self.axon))
-        self.sections = self.soma + self.dend + self.axon
+        self.soma = [s if isinstance(s, Section) else Section(p, s) for s in self.soma]
+        self.dend = [s if isinstance(s, Section) else Section(p, s) for s in self.dend]
+        self.axon = [s if isinstance(s, Section) else Section(p, s) for s in self.axon]
         self.dendrites = self.dend
+        self.sections = self.soma + self.dendrites + self.axon
+        for section in self.sections:
+            section.synapses = []
 
         # Do labelling of sections into special sections
         self._apply_labels()
