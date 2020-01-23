@@ -24,7 +24,7 @@ class StellateCell(NeuronModel):
 
     section_types = {
         "soma": {
-            "mechanisms": ['Leak','Nav1_1','Cav3_2','Cav3_3','Kir2_3','Kv1_1','Kv3_4','Kv4_3','Kca1_1','Kca2_2','Cav2_1',('Hcn1', 'stellate'),'cdp5'],
+            "mechanisms": ['Leak','Nav1_1','Cav3_2','Cav3_3','Kir2_3','Kv1_1','Kv3_4','Kv4_3','Kca1_1','Kca2_2','Cav2_1',('HCN1', 'stellate'),'cdp5'],
             "attributes": {
               "Ra": 110, "cm": 1, "ena": 60, "ek": -84, "eca": 137.5, "eh": -34,
               ("e", "Leak"): -48,
@@ -39,7 +39,7 @@ class StellateCell(NeuronModel):
               ("gbar", "Kca1_1"): 0.00518036298671,
               ("gkbar", "Kca2_2"): 0.00054166094878,
               ("pcabar", "Cav2_1"): 0.00038,
-              ("gbar", "Hcn1"): 0.00058451678362,
+              ("gbar", "HCN1"): 0.00058451678362,
               ("TotalPump", "cdp5"): 7e-9,
             }
         },
@@ -78,7 +78,7 @@ class StellateCell(NeuronModel):
             }
         },
         "axon": {
-            "mechanisms": ['Leak', 'Kv1_1', 'Nav1_6', 'Kv3_4', ('Hcn1', 'stellate'), 'cdp5'],
+            "mechanisms": ['Leak', 'Kv1_1', 'Nav1_6', 'Kv3_4', ('HCN1', 'stellate'), 'cdp5'],
             "attributes": {
                 "Ra": 110, "cm": 1, "ena": 60, "ek": -84, "eh": -34,
                 ("e", "Leak"): -48,
@@ -86,16 +86,16 @@ class StellateCell(NeuronModel):
                 ("gbar", "Kv1_1"): 0.00271359229578,
                 ("gbar", "Nav1_6"): 0.00835931586458,
                 ("gkbar", "Kv3_4"): 0.01153520393521,
-                ("gbar", "Hcn1"): 0.00070017344082,
+                ("gbar", "HCN1"): 0.00070017344082,
             }
         },
         "axon_initial_segment": {
-            "mechanisms": ['Leak', ('Hcn1', 'stellate'), 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Km', 'cdp5'],
+            "mechanisms": ['Leak', ('HCN1', 'stellate'), 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Km', 'cdp5'],
             "attributes": {
                 "Ra": 110, "cm": 1, "ena": 60, "ek": -84, "eh": -34,
                 ("e", "Leak"): -48,
                 ("gmax", "Leak"): 0.000008,
-                ("gbar", "Hcn1"): 0.00099184971498,
+                ("gbar", "HCN1"): 0.00099184971498,
                 ("gbar", "Nav1_6"): 0.4,
                 ("gbar", "Kv1_1"): 0.00492841685426,
                 ("gkbar", "Kv3_4"):0.03351450571128,
