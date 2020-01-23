@@ -107,11 +107,11 @@ class StellateCell(NeuronModel):
     labels = {
         "proximal_dendrites": {
             "from": "dendrites",
-            "radius": lambda r: r >= 0.3
+            "diam": lambda diam: diam >= 0.6
         },
         "distal_dendrites": {
             "from": "dendrites",
-            "radius": lambda r: r < 0.3
+            "diam": lambda diam: diam < 0.6
         },
         "axon_initial_segment": {
             "from": "axon",
