@@ -1,11 +1,24 @@
+import numpy as np
+from patch import p
+from ..synapses import Synapse
 from .base import NeuronModel
+from math import floor
 
-class GolgiCell(NeuronModel):
+class StellateCell(NeuronModel):
     morphologies = ['stellate.ASC']
 
     synapse_types = {
         "AMPA": {
-            "point_process": ('AMPA', 'golgi_cell_deterministic'),
+            "point_process": ('AMPA', 'stellate'),
+            "attributes": {
+                "tau_facil": 10.8, "tau_rec": 35.1, "tau_1": 10, "gmax": 2300, "U": 0.15
+            }
+        },
+        "NMDA": {
+            "point_process": ('NMDA', 'stellate'),
+            "attributes": {
+                "tau_facil": 5, "tau_rec": 8, "tau_1": 1, "gmax": 10000, "U": 0.15
+            }
         }
     }
 
@@ -13,24 +26,21 @@ class GolgiCell(NeuronModel):
         "soma": {
             "mechanisms": ['Leak','Nav1_1','Cav3_2','Cav3_3','Kir2_3','Kv1_1','Kv3_4','Kv4_3','Kca1_1','Kca2_2','Cav2_1','HCN1','cdp5StCmod'],
             "attributes": {
-              "Ra": 110,
-              "cm": 1 ,
-              "gmax_Leak": 0.000008 ,
-              "e_Leak": -48  ,
-              "gbar_Nav1_1": 0.8 ,
-              "ena": 60  ,
-              "gcabar_Cav3_2": 0.00163912063769  ,
-              "pcabar_Cav3_3": 0.00001615552993  ,
-              "gkbar_Kir2_3": 0.00001093425575 ,
-              "ek": -84,
-              "gbar_Kv1_1": 0.00107430134923,
-              "gkbar_Kv3_4": 0.008,
-              "gkbar_Kv4_3": 0.00404228168138,
-              "gbar_Kca1_1": 0.00518036298671,
-              "gkbar_Kca2_2": 0.00054166094878,
-              "pcabar_Cav2_1": 0.00038,
-              "gbar_HCN1": 0.00058451678362,
-              "eh": -34 ,
+              "Ra": 110, "cm": 1, "ena": 60, "ek": -84, "eca": 137.5, "eh": -34,
+              ("e", "Leak"): -48,
+              ("gmax", "Leak"): 0.000008,
+              ("gbar", "Nav1_1"): 0.8,
+              ("gcabar", "Cav3_2"): 0.00163912063769,
+              ("pcabar", "Cav3_3"): 0.00001615552993,
+              ("gkbar", "Kir2_3"): 0.00001093425575,
+              ("gbar", "Kv1_1"): 0.00107430134923,
+              ("gkbar", "Kv3_4"): 0.008,
+              ("gkbar", "Kv4_3"): 0.00404228168138,
+              ("gbar", "Kca1_1"): 0.00518036298671,
+              ("gkbar", "Kca2_2"): 0.00054166094878,
+              ("pcabar", "Cav2_1"): 0.00038,
+              ("gbar", "HCN1"): 0.00058451678362,
+              ("TotalPump", "cdp5"): 7e-9,
             }
         },
         "dendrites": {
