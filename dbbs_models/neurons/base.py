@@ -197,6 +197,7 @@ class NeuronModel:
 
     def record_soma(self):
         self.Vm = self.soma[0].record()
+        return self.Vm
 
 
 @contextmanager
