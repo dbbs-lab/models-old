@@ -5,7 +5,7 @@ class PurkinjeCell(NeuronModel):
     def builder(model):
         model.build_AIS()
         
-    morphologies = ['soma_10c.asc']
+    morphologies = [('soma_10c.asc', builder)]
 
     synapse_types = {
         "AMPA_PF": {
