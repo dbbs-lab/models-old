@@ -1,4 +1,5 @@
 from .base import NeuronModel
+from patch import p
 
 class PurkinjeCell(NeuronModel):
     @staticmethod
@@ -74,7 +75,7 @@ class PurkinjeCell(NeuronModel):
             "mechanisms": ['Nav1_6'],
             "attributes":  {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -88, "eca": 137,
-                (("gbar", "Nav1_6"): 0.01491080277381,
+                ("gbar", "Nav1_6"): 0.01491080277381,
             }
         },
         "AIS": {
@@ -136,62 +137,60 @@ class PurkinjeCell(NeuronModel):
             "diam": lambda diam: diam >= 3.3
         }
     }
+
     def build_AIS(self):
-
-
         ais = p.Section(name="AIS")
         ais.label = "AIS"
         ais.set_dimensions(length=17,diameter=0.97)
-        ais.set_segments(1 + (2 * int(17 / 40))
+        ais.set_segments(1 + (2 * int(17 / 40)))
         ais.connect(self.soma[0], 0)
 
         ais_k = p.Section(name="AIS_K")
         ais_k.label = "AIS_K"
         ais_k.set_dimensions(length=4,diameter=0.97)
-        ais_k.set_segments(1 + (2 * int(4 / 40))
+        ais_k.set_segments(1 + (2 * int(4 / 40)))
         ais_k.connect(ais[0], 1)
 
         myelin_0 = p.Section(name="axonmyelin")
         myelin_0.label = "axonmyelin"
         myelin_0.set_dimensions(length=100,diameter=0.73)
-        myelin_0.set_segments(1 + (2 * int(100 / 40))
+        myelin_0.set_segments(1 + (2 * int(100 / 40)))
         myelin_0.connect(ais_k[0], 1)
 
         node_0 = p.Section(name="node_0")
         node_0.label = "nodes"
         node_0.set_dimensions(length=4,diameter=0.73)
-        node_0.set_segments(1 + (2 * int(4 / 40))
+        node_0.set_segments(1 + (2 * int(4 / 40)))
         node_0.connect(myelin_0[0], 1)
 
         myelin_1 = p.Section(name="axonmyelin_1")
         myelin_1.label = "axonmyelin"
         myelin_1.set_dimensions(length=100,diameter=0.73)
-        myelin_1.set_segments(1 + (2 * int(100 / 40))
+        myelin_1.set_segments(1 + (2 * int(100 / 40)))
         myelin_1.connect(node_0[0], 1)
 
         node_1 = p.Section(name="node_1")
         node_1.label = "nodes"
         node_1.set_dimensions(length=4,diameter=0.73)
-        node_1.set_segments(1 + (2 * int(4 / 40))
+        node_1.set_segments(1 + (2 * int(4 / 40)))
         node_1.connect(myelin_1[0], 1)
 
         myelin_2 = p.Section(name="axonmyelin_2")
         myelin_2.label = "axonmyelin"
         myelin_2.set_dimensions(length=100,diameter=0.73)
-        myelin_2.set_segments(1 + (2 * int(100 / 40))
+        myelin_2.set_segments(1 + (2 * int(100 / 40)))
         myelin_2.connect(node_1[0], 1)
 
         node_2 = p.Section(name="node_2")
         node_2.label = "nodes"
         node_2.set_dimensions(length=4,diameter=0.73)
-        node_2.set_segments(1 + (2 * int(4 / 40))
+        node_2.set_segments(1 + (2 * int(4 / 40)))
         node_2.connect(myelin_2[0], 1)
 
         myelin_3 = p.Section(name="axonmyelin_3")
         myelin_3.label = "axonmyelin"
         myelin_3.set_dimensions(length=100,diameter=0.73)
-        myelin_3.set_segments(1 + (2 * int(100 / 40))
+        myelin_3.set_segments(1 + (2 * int(100 / 40)))
         myelin_3.connect(node_2[0], 1)
-
 
         self.axon = [ais, ais_k, myelin_0, node_0, myelin_1, node_1, myelin_2, node_2, myelin_3]
