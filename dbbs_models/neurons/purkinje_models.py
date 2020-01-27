@@ -37,9 +37,6 @@ class PurkinjeCell(NeuronModel):
             }
         },
         "dendrites": {
-            "mechanisms": [], "attributes": {}
-        },
-        "all_dendrites": {
             "synapses": ['AMPA_PF'],
             "mechanisms": ['Leak','Kv1_1','Kv1_5','Kv3_3','Kv4_3','Cav2_1','Cav3_3', 'Kca1_1','HCN1','cdp5_CAM'],
             "attributes": {
@@ -124,10 +121,6 @@ class PurkinjeCell(NeuronModel):
     }
 
     labels = {
-        "all_dendrites": {
-            "from": "dendrites",
-            "diam": lambda diam: diam >= 0
-        },
         "basal_dendrites": {
             "from": "dendrites",
             "diam": lambda diam: diam >= 1.6
