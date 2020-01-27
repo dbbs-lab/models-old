@@ -61,20 +61,8 @@ class NeuronModel:
     def _import_morphologies(cls):
         cls.imported_morphologies = []
         for morphology in cls.morphologies:
-            if callable(morphology):
-                # If a function is given as morphology, treat it as a builder function
-                cls.imported_morphologies.append(Builder(morphology))
-            elif isinstance(morphology, staticmethod):
-                # If a static method is given as morphology, treat it as a builder function
-                cls.imported_morphologies.append(Builder(morphology.__func__))
-            else:
-                # If a string is given, treat it as a path for Import3d
-                file = os.path.join(os.path.dirname(__file__), "../morphologies", morphology)
-                loader = p.Import3d_Neurolucida3()
-                with suppress_stdout():
-                    loader.input(file)
-                imported_morphology = p.Import3d_GUI(loader, 0)
-                cls.imported_morphologies.append(imported_morphology)
+            builder = make_builder(morphology)
+            cls.imported_morphologies.append(builder)
 
     def _apply_labels(self):
         self.soma[0].label = "soma"
