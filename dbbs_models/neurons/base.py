@@ -16,6 +16,15 @@ class Builder:
     def instantiate(self, model, *args, **kwargs):
         self.builder(model, *args, **kwargs)
 
+class ComboBuilder(Builder):
+    def __init__(self, *pipeline):
+        def outer_builder(model, *args, **kwargs):
+            for part in pipeline:
+                # Apply all builders in the pipeline sequence in order.
+                builder = make_builder(part)
+                builder.instantiate(model, *args, **kwargs)
+
+        self.builder = outer_builder
 
 class NeuronModel:
 
