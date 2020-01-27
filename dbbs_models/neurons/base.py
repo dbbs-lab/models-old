@@ -217,3 +217,38 @@ def suppress_stdout():
             yield
         finally:
             sys.stdout = old_stdout
+
+
+def _import3d_load(morphology):
+    file = os.path.join(os.path.dirname(__file__), "../morphologies", morphology)
+    loader = p.Import3d_Neurolucida3()
+    with suppress_stdout():
+        loader.input(file)
+    loaded_morphology = p.Import3d_GUI(loader, 0)
+    return loaded_morphology
+
+
+def import3d(file, model):
+    loaded_morphology = NeuronModel._import3d_load(file)
+    loaded_morphology.instantiate(model)
+
+
+def make_builder(morphology):
+    if type(morphology) is str:
+        # Use Import3D as builder.
+        return _import3d_load(morphology)
+    if callable(morphology):
+        # If a function is given as morphology, treat it as a builder function
+        return Builder(morphology)
+    elif isinstance(morphology, staticmethod):
+        # If a static method is given as morphology, treat it as a builder function
+        return Builder(morphology.__func__)
+    elif (
+        hasattr(type(morphology), "__len__")
+        and hasattr(type(morphology), "__getitem__")
+    ):
+        # If it is a sequence, construct a ComboBuilder that sequentially applies the builders.
+        print("combo building:", morphology[0], morphology[1])
+        return ComboBuilder(*morphology)
+    else:
+        raise MorphologyBuilderException("Invalid morphology data: provide a builder function or a path string to a morphology file.")
