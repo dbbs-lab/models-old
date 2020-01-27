@@ -4,7 +4,7 @@ class PurkinjeCell(NeuronModel):
     @staticmethod
     def builder(model):
         model.build_AIS()
-        
+
     morphologies = [('soma_10c.asc', builder)]
 
     synapse_types = {
@@ -25,9 +25,9 @@ class PurkinjeCell(NeuronModel):
                 ("gkbar", "Kv3_4"): 0.05577804605201,
                 ("gkbar", "Kir2_3"): 1.522193625E-05,
                 ("pcabar", "Cav2_1"): 0.00015061961222,
-                ("pcabar", "Cav3_1"): 6.48282597E-06,                
-                ("gcabar", "Cav3_2"): 0.00071828406281,                    
-                ("pcabar", "Cav3_3"): 0.00015641655503,                    
+                ("pcabar", "Cav3_1"): 6.48282597E-06,
+                ("gcabar", "Cav3_2"): 0.00071828406281,
+                ("pcabar", "Cav3_3"): 0.00015641655503,
                 ("gbar", "Kca1_1"): 0.00926340636416,
                 ("gkbar", "Kca2_2"): 0.0008067352175,
                 ("gkbar", "Kca3_1"): 0.01154992885293,
@@ -42,7 +42,8 @@ class PurkinjeCell(NeuronModel):
             "synapses": ['AMPA_PF'],
             "mechanisms": ['Leak','Kv1_1','Kv1_5','Kv3_3','Kv4_3','Cav2_1','Cav3_3', 'Kca1_1','HCN1','cdp5_CAM'],
             "attributes": {
-                "Ra": 122, "cm": (11.510294 * math.exp( - 1.376463 * d.diam) + 2.120503), "ena": 60, "ek": -88, "eh":-34.4, "eca": 137.52625,
+                "cm": lambda d: (11.510294 * math.exp( - 1.376463 * d) + 2.120503),
+                "Ra": 122, "ena": 60, "ek": -88, "eh":-34.4, "eca": 137.52625,
                 ("e", "Leak"): -61,
                 ("gmax", "Leak"): 0.0003,
                 ("gbar", "Kv1_1"): 0.00132524647813,
@@ -50,7 +51,7 @@ class PurkinjeCell(NeuronModel):
                 ("gbar", "Kv3_3"): 0.01052593082261,
                 ("gkbar", "Kv4_3"): 0.0008848451632,
                 ("pcabar", "Cav2_1"): 0.00095709772025,
-                ("pcabar", "Cav3_3"): 0.0001279244399,                
+                ("pcabar", "Cav3_3"): 0.0001279244399,
                 ("gbar", "Kca1_1"): 0.04100075140464,
                 ("gbar", "HCN1"): 2.25814895E-06,
                 ("TotalPump", "cdp5"): 5e-8,
@@ -63,8 +64,8 @@ class PurkinjeCell(NeuronModel):
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -88, "eca": 137,
                 ("e", "Leak"): -61,
                 ("gkbar", "Kir2_3"): 1.138398964E-05,
-                ("pcabar", "Cav3_1"): 4.19951376E-06,                
-                ("gcabar", "Cav3_2"): 0.00190242680205,                                       
+                ("pcabar", "Cav3_1"): 4.19951376E-06,
+                ("gcabar", "Cav3_2"): 0.00190242680205,
                 ("gkbar", "Kca2_2"): 0.0013078651204,
                 ("gkbar", "Kca3_1"): 0.00379262270143,
             }
@@ -85,7 +86,7 @@ class PurkinjeCell(NeuronModel):
                 ("gbar", "Nav1_6"): 0.75202621760062,
                 ("gkbar", "Kv3_4"): 0.01124635336537,
                 ("pcabar", "Cav2_1"): 0.00026512187174,
-                ("pcabar", "Cav3_1"): 9.01784953E-06, 
+                ("pcabar", "Cav3_1"): 9.01784953E-06,
                 ("TotalPump", "cdp5_CAM"): 2e-8,
             }
         },
@@ -115,7 +116,7 @@ class PurkinjeCell(NeuronModel):
                 ("gbar", "Nav1_6"): 0.02983944220208,
                 ("gkbar", "Kv3_4"): 0.0264331412377,
                 ("pcabar", "Cav2_1"): 0.00013393329524,
-                ("pcabar", "Cav3_1"): 1.920728269E-05, 
+                ("pcabar", "Cav3_1"): 1.920728269E-05,
                 ("TotalPump", "cdp5_CAM"): 5e-7,
             }
         },
@@ -160,7 +161,7 @@ class PurkinjeCell(NeuronModel):
         node_0.label = "nodes"
         node_0.set_dimensions(length=4,diameter=0.73)
         node_0.set_segments(1 + (2 * int(4 / 40))
-        node_0.connect(myelin_0[0], 1)        
+        node_0.connect(myelin_0[0], 1)
 
         myelin_1 = p.Section(name="axonmyelin_1")
         myelin_1.label = "axonmyelin"
@@ -172,7 +173,7 @@ class PurkinjeCell(NeuronModel):
         node_1.label = "nodes"
         node_1.set_dimensions(length=4,diameter=0.73)
         node_1.set_segments(1 + (2 * int(4 / 40))
-        node_1.connect(myelin_1[0], 1)         
+        node_1.connect(myelin_1[0], 1)
 
         myelin_2 = p.Section(name="axonmyelin_2")
         myelin_2.label = "axonmyelin"
@@ -184,13 +185,13 @@ class PurkinjeCell(NeuronModel):
         node_2.label = "nodes"
         node_2.set_dimensions(length=4,diameter=0.73)
         node_2.set_segments(1 + (2 * int(4 / 40))
-        node_2.connect(myelin_2[0], 1)    
+        node_2.connect(myelin_2[0], 1)
 
         myelin_3 = p.Section(name="axonmyelin_3")
         myelin_3.label = "axonmyelin"
         myelin_3.set_dimensions(length=100,diameter=0.73)
         myelin_3.set_segments(1 + (2 * int(100 / 40))
-        myelin_3.connect(node_2[0], 1)        
-        
-        
+        myelin_3.connect(node_2[0], 1)
+
+
         self.axon = [ais, ais_k, myelin_0, node_0, myelin_1, node_1, myelin_2, node_2, myelin_3]
