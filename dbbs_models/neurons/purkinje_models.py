@@ -136,7 +136,7 @@ class PurkinjeCell(NeuronModel):
         ais.label = "AIS"
         ais.set_dimensions(length=17,diameter=0.97)
         ais.set_segments(1 + (2 * int(17 / 40)))
-        ais.connect(self.soma, 0)
+        ais.connect(self.soma[0], 0)
 
         ais_k = p.Section(name="AIS_K")
         ais_k.label = "AIS_K"
