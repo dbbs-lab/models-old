@@ -1,7 +1,7 @@
 from arborize import NeuronModel
 
 class BasketCell(NeuronModel):
-    morphologies = ['stellate.ASC']
+    morphologies = ['01bc.ASC']
 
     section_types = {
         "soma": {
