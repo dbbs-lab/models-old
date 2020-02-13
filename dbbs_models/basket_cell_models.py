@@ -1,6 +1,6 @@
 from arborize import NeuronModel
 
-class StellateCell(NeuronModel):
+class BasketCell(NeuronModel):
     morphologies = ['stellate.ASC']
 
     section_types = {
