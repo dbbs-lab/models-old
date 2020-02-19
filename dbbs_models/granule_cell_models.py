@@ -177,29 +177,26 @@ class GranuleCell(NeuronModel):
 
         # Store the last used y position as the start for the parallel fiber
         self.y_pf = y + (seg_length * n)
-
-
+        
     def build_parallel_fiber(self):
-        # Number of sections
-        n = 2
-        # number of segments
-        nseg = int(self.parallel_fiber_length /self.fiber_segment_length)
-        section_length = int(self.parallel_fiber_length / 2)
+        section_length = 20 #self.fiber_section_length
+        n = int(self.parallel_fiber_length / section_length)
         self.parallel_fiber = [p.Section(name='parellel_fiber_'+str(x)) for x in range(n)]
-        for section in self.parallel_fiber:
-            section.nseg = int(nseg/2)
         # Use the last AA y as Y for the PF
         y = self.y_pf
         center = self.position[2]
         for id, section in enumerate(self.parallel_fiber):
             section.labels = ["parallel_fiber"]
-            section.set_dimensions(length=section_length, diameter=0.3)
+            section.set_dimensions(length=self.fiber_section_length, diameter=0.3)
             sign = 1 - (id % 2) * 2
             z = floor(id / 2) * section_length
             section.add_3d([
                 self.position + [0., y, center + sign * z],
                 self.position + [0., y, center + sign * (z + section_length)]
             ])
-            section.connect(self.ascending_axon)
+            if id < 2:
+                section.connect(self.ascending_axon)
+            else:
+                section.connect(self.parallel_fiber[id - 2])
             z += section_length
         self.axon.extend(self.parallel_fiber)
