@@ -196,7 +196,6 @@ class GranuleCell(NeuronModel):
             section.set_dimensions(length=section_length, diameter=0.3)
             sign = 1 - (id % 2) * 2
             z = floor(id / 2) * section_length
-            print(y)
             section.add_3d([
                 self.position + [0., y, center + sign * z],
                 self.position + [0., y, center + sign * (z + section_length)]
