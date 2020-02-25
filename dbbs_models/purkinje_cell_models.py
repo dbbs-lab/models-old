@@ -12,6 +12,12 @@ class PurkinjeCell(NeuronModel):
     synapse_types = {
         "AMPA_PF": {
             "point_process": ('AMPA', 'golgi_cell_deterministic'),
+        },
+        "GABA": {
+            "point_process": 'GABA',
+            "attributes": {
+                "gmax": 25000 # Set the single IPSC to 20pA as measured in adult mice in Pouzat et al. 1997
+            }
         }
     }
 
@@ -38,8 +44,8 @@ class PurkinjeCell(NeuronModel):
             }
         },
         "dendrites": {
-            "synapses": ['AMPA_PF'],
-            "mechanisms": ['Leak','Kv1_1','Kv1_5','Kv3_3','Kv4_3','Cav2_1','Cav3_3', 'Kca1_1',('HCN1', 'purkinje'), ('cdp5', 'CAM')],
+            "synapses": ['AMPA_PF', 'GABA'],
+            "mechanisms": ['Leak','Kv1_1','Kv1_5','Kv3_3','Kv4_3','Cav2_1','Cav3_3', 'Kca1_1', ('HCN1', 'purkinje'), ('cdp5', 'CAM')],
             "attributes": {
                 "cm": lambda d: (11.510294 * math.exp( - 1.376463 * d) + 2.120503),
                 "Ra": 122, "ena": 60, "ek": -88, "eh":-34.4, "eca": 137.52625,
