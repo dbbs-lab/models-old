@@ -13,6 +13,10 @@ class PurkinjeCell(NeuronModel):
     synapse_types = {
         "AMPA_PF": {
             "point_process": ('AMPA', 'golgi_cell_deterministic'),
+        },
+        "GABA": {
+            "point_process": 'GABA',
+            "attributes": {"U": 0.35}
         }
     }
 
@@ -39,7 +43,7 @@ class PurkinjeCell(NeuronModel):
             }
         },
         "dendrites": {
-            "synapses": ['AMPA_PF'],
+            "synapses": ['AMPA_PF', 'GABA'],
             "mechanisms": ['Leak','Kv1_1','Kv1_5','Kv3_3','Kv4_3','Cav2_1','Cav3_3', 'Kca1_1',('HCN1', 'purkinje'), ('cdp5', 'CAM')],
             "attributes": {
                 "cm": lambda d: (11.510294 * math.exp( - 1.376463 * d) + 2.120503),
