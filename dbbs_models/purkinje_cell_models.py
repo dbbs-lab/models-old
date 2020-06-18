@@ -7,6 +7,7 @@ class PurkinjeCell(NeuronModel):
     @staticmethod
     def builder(model):
         model.build_AIS()
+        model.set_segments()
 
     morphologies = [('soma_10c.asc', rotate([-1, 0, 0], [0, 1, 0]), builder)]
 
@@ -194,3 +195,11 @@ class PurkinjeCell(NeuronModel):
         myelin_3.connect(node_2, 1)
 
         self.axon = [ais, ais_k, myelin_0, node_0, myelin_1, node_1, myelin_2, node_2, myelin_3]
+
+    def set_segments(self):
+        """
+            All models optimized with BluePyOpt have nseg set in this way when they are
+            being optimized: 2 extra segments per 40µm length of the section.
+        """
+        for s in self.axon + self.dend + self.soma:
+            s.nseg = 1 + (2 * int(s.L/ 40))
