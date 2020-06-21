@@ -97,13 +97,9 @@ class PurkinjeCell(NeuronModel):
             "attributes": {}
         },
         "AIS_K": {
-            "mechanisms": [],
-            "attributes": {}
-        },
-        "axon_K": {
             "mechanisms": ['Leak', 'Kv1_1'],
             "attributes": {
-                "Ra": 122, "cm": 1, "ena": 60, "ek": -88, "eca": 137.52625,
+                "Ra": 122, "cm": 1, "ek": -88,
                 ("e", "Leak"): -61,
                 ("gmax", "Leak"): 0.0003,
                 ("gbar", "Kv1_1"): 0.01011038066089,
