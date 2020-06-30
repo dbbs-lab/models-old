@@ -9,4 +9,4 @@ def run_protocol(cell_name, protocol_name, **kwargs):
         protocol_name,
         *["{}={}".format(k, repr(v)) for k,v in kwargs.items()]
     ]).decode("utf-8")
-    return efel_dict(eval(out.split("\n")[1]))
+    return efel_dict(eval(out.split("\n")[-1]))
