@@ -35,5 +35,8 @@ setuptools.setup(
         "nrn-glia>=0.3.1",
         "dbbs-mod-collection>=0.0.6",
         "nrn-patch>=1.4.0",
-     ]
+     ],
+     extras_require={
+        'dev': ['efel']
+     }
  )
