@@ -9,6 +9,7 @@ jobs:
       python: 3.6
       before_install:
         - sudo dpkg -i nrn-7.7.x86_64-linux.deb
+        - wget https://neuron.yale.edu/ftp/neuron/versions/v7.7/nrn-7.7.x86_64-linux.deb
         - export PYTHONPATH=/usr/local/nrn/lib/python:$PYTHONPATH
 install:
   - source devops/check_nest_cache.sh
