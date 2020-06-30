@@ -6,4 +6,4 @@ class TestGranule(unittest.TestCase):
 
     def test_soma_current(self):
         results = run_protocol("GranuleCell", "soma_current_injection", amplitude=0.01)
-        self.assertEquals(results.Spikecount[0], 79, "Incorrect spike count.")
+        self.assertEquals(results.Spikecount[0], 9, "Incorrect spike count.")
