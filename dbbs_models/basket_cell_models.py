@@ -41,14 +41,15 @@ class BasketCell(NeuronModel):
         },
 
         "axon": {
-            "mechanisms": ['Leak', 'Kv1_1', 'Nav1_6', 'Kv3_4'],
+            "mechanisms": ['Leak', 'Kv1_1', 'Nav1_6', 'Kv3_4', 'HCN1', 'cdp5'],
             "attributes": {
-                "Ra": 122, "cm": 1, "ena": 60, "ek": -80,
+                "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eh": -34,
                 ("e", "Leak"): -60,
                 ("gmax", "Leak"): 0.00003,
                 ("gbar", "Kv1_1"): 0.0069654709,
                 ("gbar", "Nav1_6"): 0.0072983226,
                 ("gkbar", "Kv3_4"): 0.0151487764,
+                ("gbar", "HCN1"): 0.0034633208,
             }
         },
         "axon_initial_segment": {

@@ -11,11 +11,11 @@ class TestGranule(unittest.TestCase):
 class TestPurkinje(unittest.TestCase):
 
     def test_autorhythm(self):
-        results = run_protocol("PurkinjeCell", "autorhythm")
+        results = run_protocol("PurkinjeCell", "autorhythm", duration=300)
         self.assertEqual(results.Spikecount[0], 3, "Incorrect spike count.")
 
 class TestBasket(unittest.TestCase):
 
     def test_autorhythm(self):
         results = run_protocol("BasketCell", "autorhythm")
-        self.assertEqual(results.Spikecount[0], 10, "Incorrect spike count.")
+        self.assertEqual(results.Spikecount[0], 3, "Incorrect spike count.")
