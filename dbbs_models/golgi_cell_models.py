@@ -53,7 +53,7 @@ class GolgiCell(NeuronModel):
             }
         },
         "apical_dendrites": {
-            "synapses": ['AMPA', 'NMDA'],
+            "synapses": ['AMPA'],
             "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kca1_1', 'Kca2_2', 'Cav2_3', 'Cav3_1', 'cdp5'],
             "attributes":  {
                 "Ra": 122, "cm": 3, "ena": 60, "ek": -80, "eca": 137,
