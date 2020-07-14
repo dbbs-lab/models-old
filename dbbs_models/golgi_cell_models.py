@@ -21,7 +21,7 @@ class GolgiCell(NeuronModel):
 
     section_types = {
         "soma": {
-            "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Kv4_3', 'Kca1_1', 'Kca3_1', 'GRC_CA', 'Cav3_1', 'cdp5'],
+            "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Kv4_3', 'Kca1_1', 'Kca3_1', 'Ca', 'Cav3_1', 'cdp5'],
             "attributes": {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
@@ -32,7 +32,7 @@ class GolgiCell(NeuronModel):
                 ("gkbar", "Kv4_3"): 0.00406420380423,
                 ("gbar", "Kca1_1"): 0.017643457890359999,
                 ("gkbar", "Kca3_1"): 0.10177335775222,
-                ("gcanbar", "GRC_CA"): 0.00026807889475,
+                ("gcabar", "Ca"): 0.00026807889475,
                 ("pcabar", "Cav3_1"): 0.0087689418803000001,
                 ("TotalPump", "cdp5"): 9.9999999999999995e-08,
             }
@@ -42,7 +42,7 @@ class GolgiCell(NeuronModel):
         },
         "basal_dendrites": {
             "synapses": ['AMPA', 'NMDA'],
-            "mechanisms": ['Leak','Nav1_6','Kca1_1','Kca2_2','GRC_CA','cdp5'],
+            "mechanisms": ['Leak','Nav1_6','Kca1_1','Kca2_2','Ca','cdp5'],
             "attributes": {
                 "Ra": 122, "cm": 2.5, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
@@ -50,7 +50,7 @@ class GolgiCell(NeuronModel):
                 ("gbar", "Nav1_6"): 0.0080938853145999991,
                 ("gbar", "Kca1_1"): 0.012260527481460001,
                 ("gkbar", "Kca2_2"): 0.016506899583850002,
-                ("gcanbar", "GRC_CA"): 0.0013988561771200001,
+                ("gcabar", "Ca"): 0.0013988561771200001,
                 ("TotalPump", "cdp5"): 2.0000000000000001e-09,
             }
         },
@@ -81,15 +81,15 @@ class GolgiCell(NeuronModel):
             }
         },
         "axon_initial_segment": {
-            "mechanisms": ['Leak', ('HCN1', 'golgi'), 'HCN2', 'Nav1_6', "GRC_CA", 'Kca1_1', 'GRC_KM', 'cdp5'],
+            "mechanisms": ['Leak', ('HCN1', 'golgi'), 'HCN2', 'Nav1_6', "Ca", 'Kca1_1', 'Km', 'cdp5'],
             "attributes": {
-                "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137, "Erev_HCN1": -20, "ehcn2_HCN2": -20,
+                "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
                 ("gmax", "Leak"): 3.0000000000000001e-05,
                 ("gbar", "Nav1_6"): 0.17233663543618999,      
                 ("gbar", "Kca1_1"): 0.10008178886943001,
-                ("gcanbar", "GRC_CA"): 0.0059504600114800004,
-                ("gkbar", "GRC_KM"): 0.00024381226197999999,
+                ("gcabar", "Ca"): 0.0059504600114800004,
+                ("gkbar", "Km"): 0.00024381226197999999,
                 ("gbar", "HCN1"): 0.0003371456442,
                 ("gbar", "HCN2"): 0.00030643090764,
                 ("TotalPump", "cdp5"): 1e-8,
