@@ -21,7 +21,7 @@ class GolgiCell(NeuronModel):
 
     section_types = {
         "soma": {
-            "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Kv4_3', 'Kca1_1', 'Kca3_1', 'Ca', 'Cav3_1', 'cdp5'],
+            "mechanisms": ['Leak', 'Nav1_6', 'Kv1_1', 'Kv3_4', 'Kv4_3', 'Kca1_1', 'Kca3_1', 'Ca', 'Cav3_1', ('cdp5', 'CAM_GoC')],
             "attributes": {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
@@ -42,7 +42,7 @@ class GolgiCell(NeuronModel):
         },
         "basal_dendrites": {
             "synapses": ['AMPA', 'NMDA'],
-            "mechanisms": ['Leak','Nav1_6','Kca1_1','Kca2_2','Ca','cdp5'],
+            "mechanisms": ['Leak','Nav1_6','Kca1_1','Kca2_2','Ca',('cdp5', 'CAM_GoC')],
             "attributes": {
                 "Ra": 122, "cm": 2.5, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
@@ -56,7 +56,7 @@ class GolgiCell(NeuronModel):
         },
         "apical_dendrites": {
             "synapses": ['AMPA'],
-            "mechanisms": ['Leak', 'Nav1_6', 'Kca1_1', 'Kca2_2', 'Cav2_3', 'Cav3_1', 'cdp5'],
+            "mechanisms": ['Leak', 'Nav1_6', 'Kca1_1', 'Kca2_2', 'Cav2_3', 'Cav3_1', ('cdp5', 'CAM_GoC')],
             "attributes":  {
                 "Ra": 122, "cm": 2.5, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
@@ -70,7 +70,7 @@ class GolgiCell(NeuronModel):
             }
         },
         "axon": {
-            "mechanisms": ['Leak', 'Nav1_6', 'Kv3_4', 'cdp5'],
+            "mechanisms": ['Leak', 'Nav1_6', 'Kv3_4', ('cdp5', 'CAM_GoC')],
             "attributes": {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
@@ -81,7 +81,7 @@ class GolgiCell(NeuronModel):
             }
         },
         "axon_initial_segment": {
-            "mechanisms": ['Leak', ('HCN1', 'golgi'), 'HCN2', 'Nav1_6', "Ca", 'Kca1_1', 'Km', 'cdp5'],
+            "mechanisms": ['Leak', ('HCN1', 'golgi'), 'HCN2', 'Nav1_6', "Ca", 'Kca1_1', 'Km', ('cdp5', 'CAM_GoC')],
             "attributes": {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
