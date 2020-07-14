@@ -25,7 +25,7 @@ class GolgiCell(NeuronModel):
             "attributes": {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
-                ("gmax", "Leak"): 3.0000000000000001e-05,
+                ("gmax", "Leak"): 0.00003,
                 ("gbar", "Nav1_6"): 0.14927733727426001,
                 ("gbar", "Kv1_1"): 0.0054950751051900002,
                 ("gkbar", "Kv3_4"): 0.14910988921938001,
@@ -34,7 +34,7 @@ class GolgiCell(NeuronModel):
                 ("gkbar", "Kca3_1"): 0.10177335775222,
                 ("gcabar", "Ca"): 0.00026807889475,
                 ("pcabar", "Cav3_1"): 0.0087689418803000001,
-                ("TotalPump", "cdp5"): 9.9999999999999995e-08,
+                ("TotalPump", "cdp5"): 1e-7,
             }
         },
         "dendrites": {
@@ -46,12 +46,12 @@ class GolgiCell(NeuronModel):
             "attributes": {
                 "Ra": 122, "cm": 2.5, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
-                ("gmax", "Leak"): 3.0000000000000001e-05,
+                ("gmax", "Leak"): 0.00003,
                 ("gbar", "Nav1_6"): 0.0080938853145999991,
                 ("gbar", "Kca1_1"): 0.012260527481460001,
                 ("gkbar", "Kca2_2"): 0.016506899583850002,
                 ("gcabar", "Ca"): 0.0013988561771200001,
-                ("TotalPump", "cdp5"): 2.0000000000000001e-09,
+                ("TotalPump", "cdp5"): 2e-9,
             }
         },
         "apical_dendrites": {
@@ -60,13 +60,13 @@ class GolgiCell(NeuronModel):
             "attributes":  {
                 "Ra": 122, "cm": 2.5, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
-                ("gmax", "Leak"): 3.0000000000000001e-05,
+                ("gmax", "Leak"): 0.00003,
                 ("gbar", "Nav1_6"): 0.00499506303209,
                 ("gbar", "Kca1_1"): 0.01016375552607,
                 ("gkbar", "Kca2_2"): 0.0024717247914099998,
                 ("gcabar", "Cav2_3"): 0.00128859564935,
                 ("pcabar", "Cav3_1"): 3.690771983e-05,
-                ("TotalPump", "cdp5"): 5.0000000000000001e-09,
+                ("TotalPump", "cdp5"): 5e-9,
             }
         },
         "axon": {
@@ -74,10 +74,10 @@ class GolgiCell(NeuronModel):
             "attributes": {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
-                ("gmax", "Leak"): 9.9999999999999995e-07,
+                ("gmax", "Leak"): 0.000001,
                 ("gbar", "Nav1_6"): 0.0115,
-                ("gkbar", "Kv3_4"): 0.00910,
-                ("TotalPump", "cdp5"): 1e-08,
+                ("gkbar", "Kv3_4"): 0.0091,
+                ("TotalPump", "cdp5"):  1e-8,
             }
         },
         "axon_initial_segment": {
@@ -85,7 +85,7 @@ class GolgiCell(NeuronModel):
             "attributes": {
                 "Ra": 122, "cm": 1, "ena": 60, "ek": -80, "eca": 137,
                 ("e", "Leak"): -55,
-                ("gmax", "Leak"): 3.0000000000000001e-05,
+                ("gmax", "Leak"):  0.00003,
                 ("gbar", "Nav1_6"): 0.17233663543618999,      
                 ("gbar", "Kca1_1"): 0.10008178886943001,
                 ("gcabar", "Ca"): 0.0059504600114800004,
