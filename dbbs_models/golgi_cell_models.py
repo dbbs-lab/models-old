@@ -9,6 +9,7 @@ class GolgiCell(NeuronModel):
             "point_process": 'AMPA',
             "attributes": {
                 "tau_facil": 54, "tau_rec": 35.1, "tau_1": 30, "gmax": 1200, "U": 0.4
+            }
         },
         "AMPA_MF": {
             "point_process": ('AMPA', 'granule'),
