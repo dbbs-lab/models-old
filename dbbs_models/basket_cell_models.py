@@ -34,9 +34,9 @@ class BasketCell(NeuronModel):
                 "Ra": 122, "cm": 1, "ek": -80,
                 ("e", "Leak"): -60,
                 ("gmax", "Leak"): 0.00003,
-                ("pcabar", "Cav2_1"): 0.0004965596,
+                ("pcabar", "Cav2_1"): 0.000,
                 ("gbar", "Kca1_1"): 0.0020575902,
-                ("gbar", "Kv1_1"): 0.0285137286,
+                ("gbar", "Kv1_1"): 0.02,
             }
         },
 
